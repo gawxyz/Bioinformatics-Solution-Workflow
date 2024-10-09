@@ -19,45 +19,72 @@
 4. 将提取的信息保存到`db`文件夹中的CSV文件和SQLite数据库
 
 ## 项目结构
-.
+
+```
 ├── src/
 │ ├── paper_processor.py
 │ └── utils/
-│ └── paper_summary.py
+│ ├── paper_summary.py
+│ └── bridge_llm/
+│ └── .env
 ├── db/
 │ ├── paper_summaries.csv
 │ └── paper_summaries.db
-└── README.md
+├── README.md
+├── LICENSE
+├── .gitignore
+└── environment.yml
+```
+
+## 环境配置
+
+### 使用 Conda 配置环境
+
+## 环境配置
+
+### 使用 Conda 配置环境
+
+1. 确保已安装 Conda。如果没有，请从 [Conda 官网](https://docs.conda.io/en/latest/miniconda.html) 下载并安装。
+
+2. 克隆项目仓库：
+   ```bash
+   git clone https://github.com/your-username/paper-summary-generator.git
+   cd paper-summary-generator
+   ```
+
+3. 使用 environment.yml 文件创建新的 Conda 环境：
+   ```bash
+   conda env create -f environment.yml
+   ```
+
+4. 激活环境：
+   ```bash
+   conda activate langgraph_paper_summary
+   ```
+
+
+### 配置环境变量
+
+在 `src/utils/bridge_llm/.env` 文件中配置以下环境变量：
+
+```
+DOUBAO_MODEL_ID=your_entrypoint_id
+ARK_API_KEY=your_ark_api_key
+ARK_API_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
+OLLAMA_BASE_URL1=http://your_ollama_url1:port
+OLLAMA_BASE_URL2=http://your_ollama_url2:port
+```
+
+请确保将 `your_ark_api_key`、`your_ollama_url1` 和 `your_ollama_url2` 替换为实际的值。
 
 ## 使用方法
 
-1. 确保已安装所有必要的依赖项。
-2. 在`main`函数中提供要处理的PMCID列表。
-3. 运行`paper_processor.py`脚本：
-
-## 依赖项
-
-- requests
-- sqlite3
-- csv
-- json
-- typing
-- langgraph
-
-安装依赖：
-```bash
-pip install requests langgraph
-```
-
-## 依赖项
-
-- requests
-- sqlite3
-- csv
-- json
-- typing
-- langgraph
-
+1. 确保已完成环境配置和依赖安装。
+2. 在 `src/paper_processor.py` 的 `main` 函数中提供要处理的PMCID列表。
+3. 运行 `paper_processor.py` 脚本：
+   ```bash
+   python src/paper_processor.py
+   ```
 
 ## 输出
 
