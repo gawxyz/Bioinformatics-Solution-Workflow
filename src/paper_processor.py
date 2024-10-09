@@ -71,7 +71,7 @@ def process_and_summarize_paper(pmcid: str) -> Dict[str, Any]:
         "article_description": summary_result["summary"].get("description", ""),
         "article_function": summary_result["summary"].get("function", ""),
         "article_homepage": summary_result["summary"].get("homepage", ""),
-        "article_keyword": summary_result["summary"].get("keyword", ""),
+        "article_keyword": summary_result["summary"].get("keywords", ""),
         "article_tooltype": summary_result["tool_types"].get("toolType", []),
         "article_topic": summary_result["topics"].get("Topic", [])
     }
@@ -128,5 +128,5 @@ def main(pmcids: List[str]):
     save_to_database(results, "paper_summaries.db")
 
 if __name__ == "__main__":
-    pmcids = ["10767903"]  # Add more PMCIDs as needed
+    pmcids = ["10164590", "10767903"]  # Add more PMCIDs as needed 10164590  10767903
     main(pmcids)

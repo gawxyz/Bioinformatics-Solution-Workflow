@@ -162,7 +162,6 @@ Guidelines:
 2. The "description" should provide a quick overview of the paper's main points.
 3. The "function" field should elaborate on the paper's key contributions, methods, or tools.
 4. If a homepage is not explicitly mentioned, you may leave it as an empty string.
-5. Ensure all available publication identifiers are included.
 6. If any field cannot be confidently filled based on the provided JSON content, use null as the value.
 
 Please provide the JSON summary based on the JSON content."""
