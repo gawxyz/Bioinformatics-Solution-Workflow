@@ -12,7 +12,7 @@ from typing import Annotated
 from typing_extensions import TypedDict
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-from config.prompts import (
+from utils.config.prompts import (
     TOOL_TYPE_LIST,
     BIOSCIENCE_TOPIC_LIST,
     SUMMARY_PAPER_TEMPLATE

@@ -24,7 +24,7 @@ def extract_full_text(paper_info: Dict[str, Any]) -> str:
             full_text += passage.get("text", "") + "\n"
     return full_text.strip()
 
-def extract_abstract_filtered(paper_info: Dict[str, Any]) -> str:
+def extract_full_text_filtered(paper_info: Dict[str, Any]) -> str:
     """
     提取论文各部分的文本 去除和主题无关部分 减少token消耗。如 METHODS,REF,SUPPL,DISCUSS,ACK_FUND等   
     """
@@ -38,14 +38,14 @@ def extract_abstract_filtered(paper_info: Dict[str, Any]) -> str:
                 sections[section_type] = passage['text']
             else:
                 sections[section_type] += '\n' + passage['text']
-    sections_filtered = {k: v for k, v in sections.items() if k not in ['METHODS', 'REF','SUPPL','DISCUSS','ACK_FUND']}
+    sections_filtered = {k: v for k, v in sections.items() if k not in ['METHODS', 'REF','ACK_FUND']}
     # 将 sections 中的所有值拼接成一个字符串    
     full_text_filtered = '\n'.join(sections_filtered.values())
     return full_text_filtered.strip()
 
 def extract_metadata(paper_info: Dict[str, Any]) -> Dict[str, str]:
     metadata = {}
-    for document in paper_info.get("documents", []):
+    for document in paper_info[0].get("documents", []):
         for passage in document.get("passages", []):
             infons = passage.get("infons", {})
             if "article-id_doi" in infons:
@@ -61,7 +61,7 @@ def extract_metadata(paper_info: Dict[str, Any]) -> Dict[str, str]:
 def process_and_summarize_paper(pmcid: str) -> Dict[str, Any]:
     paper_info = get_paper_from_pmc(pmcid)
     metadata = extract_metadata(paper_info)
-    full_text = extract_abstract_filtered(paper_info)
+    full_text = extract_full_text_filtered(paper_info)
     
     summary_result = process_paper(full_text)
     
