@@ -30,7 +30,8 @@ TOOL_TYPE_LIST = """
   "Workflow": "A set of tools composed into a processing pipeline, typically standalone but combined for convenience, often for batch execution via a workflow engine or script."
 }
 """
-
+# 工具类型简表
+TOOL_TYPE_LIST_SIMPLE = "['Algorithm', 'Command-line tool', 'Database portal', 'Desktop application', 'Library', 'Method', 'Model', 'Ontology', 'Plug-in', 'Suite', 'Web application', 'Web API', 'Workbench', 'Workflow']"
 
 # 生物科学主题列表
 BIOSCIENCE_TOPIC_LIST = """
@@ -141,6 +142,9 @@ BIOSCIENCE_TOPIC_LIST = """
 }
 """
 
+# 生物科学主题简表
+BIOSCIENCE_TOPIC_LIST_SIMPLE = ["Agricultural science","Biochemistry","Biomarkers","Biophysics","Biotechnology","Cell biology","Chemical biology","Developmental biology","Evolutionary biology","Freshwater biology","Genetics","Human biology","Marine biology","Microbiology","Model organisms","Molecular biology","Plant biology","Structural biology","Synthetic biology","Systems biology","Virology","Zoology","Anatomy","Immunology","Laboratory animal science","Medicines research and development","Neurobiology","Nutritional science","Parasitology","Pharmacology","Regenerative medicine","Sample collections","Biomolecular simulation","Function analysis","Molecular genetics","Molecular interactions, pathways and networks","Nucleic acids","Phylogeny","Proteins","Sequence analysis","Sequence sites, features and motifs","Structure analysis","Biodiversity","Carbon cycle","Metagenomics","Microbial ecology","Allergy, clinical immunology and immunotherapeutics","Anaesthesiology","Cardiology","Complementary medicine","Critical care medicine","Dentistry","Dermatology","Ear, nose and throat medicine","Endocrinology and metabolism","Gastroenterology","Gender medicine","Geriatric medicine","Gynaecology and obstetrics","Haematology","Hepatic and biliary medicine","Medical toxicology","Musculoskeletal medicine","Neurology","Oncology","Ophthalmology","Paediatrics","Pain medicine","Pathology","Personalised medicine","Physiology","Psychiatry","Public health and epidemiology","Reproductive health","Respiratory medicine","Surgery","Systems medicine","Toxicology","Translational medicine","Trauma medicine","Tropical medicine","Urology and nephrology","Veterinary medicine","Fluxomics","Genomics","Immunomics","Metabolomics","Molecular evolution","Multiomics","Phenomics","Proteomics"]
+
 # 论文摘要提示模板
 SUMMARY_PAPER_TEMPLATE = """You are an advanced AI trained to analyze scientific papers from PubMed Central. Your task is to extract key information from the provided JSON content of a full-text article and generate a structured JSON summary.
 
@@ -165,3 +169,14 @@ Guidelines:
 6. If any field cannot be confidently filled based on the provided JSON content, use null as the value.
 
 Please provide the JSON summary based on the JSON content."""
+TOOL_TYPE_PROMPT_TEMPLATE = """You are a software engineer tasked with classifying software tools. \n
+
+    Here are the definitions of the tool types: \n\n {tool_type_list} \n\n 
+    Here is the paper of the tool: \n\n {paper_content} \n\n
+    Classify the tools based on the definitions, allowing for multiple types per tool.\n
+    Provide a JSON format with a single key for the "toolType", like {{"toolType": ["type1", "type2", ...]}}, without any premable or explanations."""
+TOOL_TOPIC_PROMPT_TEMPLATE = """You are a life scientist tasked with assigning relevant bioscience topics to a paper. \n
+    Here are the concepts of each bioscience topic: \n\n {bioscience_topic_list} \n\n
+    Here is the paper's content: \n\n {paper_content} \n\n
+    Assign the main relevant scientific topics based on the provided bioscience concepts, allowing for multiple topics per paper. \n
+    Provide a JSON format with a single key for "Topic", like {{"Topic": ["topic1", "topic2", ...]}}, without any premable or explanations."""

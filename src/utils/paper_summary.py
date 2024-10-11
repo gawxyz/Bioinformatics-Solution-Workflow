@@ -15,7 +15,9 @@ from langchain_core.output_parsers import JsonOutputParser
 from utils.config.prompts import (
     TOOL_TYPE_LIST,
     BIOSCIENCE_TOPIC_LIST,
-    SUMMARY_PAPER_TEMPLATE
+    SUMMARY_PAPER_TEMPLATE,
+    TOOL_TYPE_PROMPT_TEMPLATE,
+    TOOL_TOPIC_PROMPT_TEMPLATE
 )
 
 # 可切换不同的LLM
@@ -23,22 +25,15 @@ current_llm = chat_doubao
 
 # 工具类型标注器 
 tooltype_prompt = PromptTemplate(
-    template="""You are a software engineer tasked with classifying software tools. \n
-    Here are the definitions of the tool types: \n\n {tool_type_list} \n\n 
-    Here is the description of the tools: \n\n {paper_content} \n\n
-    Classify the tools based on the definitions, allowing for multiple types per tool.\n
-    Provide a JSON format with a single key for the "toolType", like {{"toolType": ["class1", "class2", ...]}}, without any premable or explanations.""",
     input_variables=["tool_type_list","paper_content"],
+    template=TOOL_TYPE_PROMPT_TEMPLATE,
+    
 )
 
 ## 论文主题分类器
 prompt_topic = PromptTemplate(
-    template="""You are a life scientist tasked with assigning relevant bioscience topics to a paper. \n
-    Here are the concepts of each bioscience topic: \n\n {bioscience_topic_list} \n\n
-    Here is the paper's content: \n\n {paper_content} \n\n
-    Assign the main relevant scientific topics based on the provided bioscience concepts, allowing for multiple topics per paper. \n
-    Provide a JSON format with a single key for "Topic", like {{"Topic": ["topic1", "topic2", ...]}}, without any premable or explanations.""",
     input_variables=["bioscience_topic_list","paper_content"],
+    template=TOOL_TOPIC_PROMPT_TEMPLATE,
 )
 
 summary_paper_prompt = PromptTemplate(
