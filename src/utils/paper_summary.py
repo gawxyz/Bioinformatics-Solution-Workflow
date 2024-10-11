@@ -1,4 +1,3 @@
-
 from utils.bridge_llm.llm_ollama import (
     chat_ollama_llama31_json,
     chat_ollama_llama31,
@@ -13,8 +12,8 @@ from typing_extensions import TypedDict
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from utils.config.prompts import (
-    TOOL_TYPE_LIST,
-    BIOSCIENCE_TOPIC_LIST,
+    TOOL_TYPE_LIST_SIMPLE,
+    BIOSCIENCE_TOPIC_LIST_SIMPLE,
     SUMMARY_PAPER_TEMPLATE,
     TOOL_TYPE_PROMPT_TEMPLATE,
     TOOL_TOPIC_PROMPT_TEMPLATE
@@ -31,7 +30,7 @@ tooltype_prompt = PromptTemplate(
 )
 
 ## 论文主题分类器
-prompt_topic = PromptTemplate(
+topic_prompt = PromptTemplate(
     input_variables=["bioscience_topic_list","paper_content"],
     template=TOOL_TOPIC_PROMPT_TEMPLATE,
 )
@@ -43,7 +42,7 @@ summary_paper_prompt = PromptTemplate(
 
 # label chains
 tool_type_labeler = tooltype_prompt | current_llm | JsonOutputParser()
-topic_labeler = prompt_topic | current_llm | JsonOutputParser()
+topic_labeler = topic_prompt | current_llm | JsonOutputParser()
 paper_summary_generator = summary_paper_prompt | current_llm | JsonOutputParser()
 
 
@@ -65,7 +64,7 @@ def summarize_paper(state) -> GraphState:
 def label_tool_type(state) -> GraphState:
     print("---label_tool_type---")
     tool_types = tool_type_labeler.invoke({
-        "tool_type_list": TOOL_TYPE_LIST, 
+        "tool_type_list": TOOL_TYPE_LIST_SIMPLE, 
         "paper_content": state["paper_content"]
     })
     state["tool_types"] = tool_types
@@ -74,7 +73,7 @@ def label_tool_type(state) -> GraphState:
 def label_topic(state) -> GraphState:
     print("---label_topic---")
     topics = topic_labeler.invoke({
-        "bioscience_topic_list": BIOSCIENCE_TOPIC_LIST, 
+        "bioscience_topic_list": BIOSCIENCE_TOPIC_LIST_SIMPLE, 
         "paper_content": state["paper_content"]
     })
     state["topics"] = topics

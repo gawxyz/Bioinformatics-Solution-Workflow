@@ -1,12 +1,9 @@
 import requests
-# import xml.etree.ElementTree as ET
 import json
 from typing import List, Dict, Any
 import csv
 import sqlite3
 import os
-# from utils.bridge_llm.llm_ollama import chat_ollama_llama31_json
-# from langgraph.graph import StateGraph, END
 from utils.paper_summary import process_paper
 
 def get_paper_from_pmc(pmcid: str) -> Dict[str, Any]:
