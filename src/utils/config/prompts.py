@@ -180,3 +180,32 @@ TOOL_TOPIC_PROMPT_TEMPLATE = """You are a life scientist tasked with assigning r
     Here is the paper's content: \n\n {paper_content} \n\n
     Assign the main relevant scientific topics based on the provided bioscience concepts, allowing for multiple topics per paper. \n
     Provide a JSON format with a single key for "Topic", like {{"Topic": ["topic1", "topic2", ...]}}, without any premable or explanations."""
+# 优化后的合并提示模板
+COMBINED_PROMPT_TEMPLATE = """You are an advanced AI specialized in analyzing scientific papers about computational tools in the medical and biological fields. Your task is to extract key information from the provided content of a full-text article and generate a structured JSON summary that will help researchers quickly identify tools that meet their research needs.
+
+Carefully analyze the following content of a scientific paper:
+
+{paper_content}
+
+Based on this content, create a JSON summary with the following structure:
+
+{{
+  "description": "A concise description of the tool's main purpose and functionality (2-3 sentences)",
+  "function": "A detailed explanation of the main contributions, methodologies, key features",
+  "homepage": "The official website or repository of the tool",
+  "keywords": "The keywords of the tool", 
+  "toolType": ["type1", "type2", ...],
+  "Topic": ["topic1", "topic2", ...]
+}}
+
+Guidelines:
+1. Focus on extracting information that would be most relevant to researchers looking for computational tools in medical and biological fields.
+2. The "description" should provide a detailed overview of the tool's main purpose.
+3. The "function" field should elaborate on the tool's key contributions, methods, important features.
+4. If a homepage is not explicitly mentioned, you may leave it as an empty string.
+5. For "toolType", classify the tool based on the following list, allowing for multiple types:
+   {tool_type_list}
+6. For "Topic", assign the main relevant scientific topics based on the following list, allowing for multiple topics:
+   {bioscience_topic_list}
+
+Please provide the JSON summary based on the paper content, focusing on aspects that would be most helpful for researchers seeking computational tools for their work."""
