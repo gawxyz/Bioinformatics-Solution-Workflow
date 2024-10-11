@@ -2,8 +2,10 @@ import os
 from dotenv import load_dotenv
 from langchain_ollama import ChatOllama, OllamaEmbeddings
 
-# 加载.env文件中的环境变量
-load_dotenv(dotenv_path="/home/awgao/bioSolution_RAG_LLM/langchain_Tutorial/LangGraph_20240905/backend/llm_bridge/.env")
+# 使用相对路径加载.env文件
+current_dir = os.path.dirname(os.path.abspath(__file__))
+env_path = os.path.join(current_dir, '.env')
+load_dotenv(dotenv_path=env_path)
 
 # 从.env文件中获取base_url
 OLLAMA_BASE_URL1 = os.getenv("OLLAMA_BASE_URL1")
@@ -48,7 +50,6 @@ __all__ = [
     "embeddings_nomic",
     "embeddings_jina"
 ]
-
 
 # 示例用法（如果直接运行此文件）
 if __name__ == "__main__":

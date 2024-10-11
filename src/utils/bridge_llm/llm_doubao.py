@@ -2,9 +2,10 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 
-# 加载.env文件
-load_dotenv(dotenv_path="/home/awgao/bioSolution_RAG_LLM/langchain_Tutorial/LangGraph_20240905/backend/llm_bridge/.env")
-
+# 使用相对路径加载.env文件
+current_dir = os.path.dirname(os.path.abspath(__file__))
+env_path = os.path.join(current_dir, '.env')
+load_dotenv(dotenv_path=env_path)
 
 chat_doubao = ChatOpenAI(
     model=os.getenv("DOUBAO_MODEL_ID"),
@@ -13,11 +14,10 @@ chat_doubao = ChatOpenAI(
     temperature=0.1,  # 可以根据需要调整
 )
 
-
 # 示例用法（如果直接运行此文件）
 if __name__ == "__main__":
     question = "常见的十字花科植物有哪些？"
     answer = chat_doubao.invoke(question)
     print(f"问题：{question}")
     print(f"回答：{answer.content}")
- 
+

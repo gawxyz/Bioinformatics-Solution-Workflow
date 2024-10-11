@@ -158,12 +158,15 @@ def save_to_database(data: List[Dict[str, Any]], db_name: str):
 def main(pmcids: List[str]):
     logging.info(f"开始处理{len(pmcids)}篇论文...")
     results = []
-    for pmcid in pmcids:
+    total = len(pmcids)
+    for index, pmcid in enumerate(pmcids, 1):
         try:
+            logging.info(f"正在处理第 {index}/{total} 篇论文 (PMCID: {pmcid})...")
             result = process_and_summarize_paper(pmcid)
             results.append(result)
+            logging.info(f"完成第 {index}/{total} 篇论文的处理 (PMCID: {pmcid})")
         except Exception as e:
-            error_msg = f"处理PMCID {pmcid}时出错: {str(e)}"
+            error_msg = f"处理PMCID {pmcid}时出错 ({index}/{total}): {str(e)}"
             logging.error(error_msg)
     
     save_to_csv(results, "paper_summaries.csv")

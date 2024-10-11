@@ -17,28 +17,29 @@
    - 工具类型
    - 主题
 4. 将提取的信息保存到`db`文件夹中的CSV文件和SQLite数据库
+5. 提供详细的日志记录，同时输出到文件和控制台
+6. 在处理多篇论文时显示进度信息
 
 ## 项目结构
 
 ```
+paper-summary-generator/
 ├── src/
-│ ├── paper_processor.py
-│ └── utils/
-│ ├── paper_summary.py
-│ └── bridge_llm/
-│ └── .env
+│   ├── paper_processor.py
+│   └── utils/
+│       ├── paper_summary.py
+│       └── bridge_llm/
+│           └── .env
 ├── db/
-│ ├── paper_summaries.csv
-│ └── paper_summaries.db
-├── README.md
+│   ├── paper_summaries.csv
+│   └── paper_summaries.db
+├── logs/
+│   └── paper_processor_YYYYMMDD_HHMMSS.log
+��── README.md
 ├── LICENSE
 ├── .gitignore
 └── environment.yml
 ```
-
-## 环境配置
-
-### 使用 Conda 配置环境
 
 ## 环境配置
 
@@ -62,7 +63,6 @@
    conda activate langgraph_paper_summary
    ```
 
-
 ### 配置环境变量
 
 在 `src/utils/bridge_llm/.env` 文件中配置以下环境变量：
@@ -75,7 +75,7 @@ OLLAMA_BASE_URL1=http://your_ollama_url1:port
 OLLAMA_BASE_URL2=http://your_ollama_url2:port
 ```
 
-请确保将 `your_ark_api_key`、`your_ollama_url1` 和 `your_ollama_url2` 替换为实际的值。
+请确保将 `your_ark_api_key`、`your_ollama_url1` 和 `your_ollama_url2` 替换为实际的值。环境变量文件现在使用相对路径加载，无需手动指定完整路径。
 
 ## 使用方法
 
@@ -90,12 +90,15 @@ OLLAMA_BASE_URL2=http://your_ollama_url2:port
 
 - `db/paper_summaries.csv`: 包含所有处理过的论文信息的CSV文件。
 - `db/paper_summaries.db`: 包含所有处理过的论文信息的SQLite数据库。
+- `logs/paper_processor_YYYYMMDD_HHMMSS.log`: 包含详细运行日志的文件。
 
 ## 注意事项
 
 - 确保您有足够的权限访问PMC API并下载论文内容。
 - 脚本会过滤掉一些与主题无关的部分（如方法、参考文献等），以减少token消耗。
-- 如果遇到任何问题，请检查控制台输出以获取错误信息。
+- 日志信息会同时输出到控制台和日志文件，方便实时查看处理进度和调试。
+- 处理多篇论文时，程序会显示当前处理进度，如"正在处理第 X/Y 篇论文"。
+- 如果遇到任何问题，请检查控制台输出和日志文件以获取详细信息。
 
 ## 贡献
 

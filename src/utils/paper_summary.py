@@ -12,6 +12,7 @@ from typing_extensions import TypedDict
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from utils.config.prompts import (
+    TOOL_TYPE_LIST,
     TOOL_TYPE_LIST_SIMPLE,
     BIOSCIENCE_TOPIC_LIST_SIMPLE,
     COMBINED_PROMPT_TEMPLATE
@@ -39,7 +40,7 @@ def process_paper_combined(state) -> GraphState:
     print("---processing_paper---")
     result = paper_processor.invoke({
         "paper_content": state["paper_content"],
-        "tool_type_list": TOOL_TYPE_LIST_SIMPLE,
+        "tool_type_list": TOOL_TYPE_LIST,
         "bioscience_topic_list": BIOSCIENCE_TOPIC_LIST_SIMPLE
     })
     state["result"] = result
