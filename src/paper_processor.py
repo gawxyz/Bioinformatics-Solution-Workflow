@@ -79,8 +79,8 @@ def process_and_summarize_paper(pmcid: str) -> Dict[str, Any]:
     return result
 
 def save_to_csv(data: List[Dict[str, Any]], filename: str):
-    os.makedirs('db', exist_ok=True)
-    filepath = os.path.join('db', filename)
+    os.makedirs('../db', exist_ok=True)
+    filepath = os.path.join('../db', filename)
     with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
         fieldnames = [
             "article-id_doi", "article-id_pmc", "article-id_pmid", "article_title",
@@ -93,8 +93,8 @@ def save_to_csv(data: List[Dict[str, Any]], filename: str):
             writer.writerow(row)
 
 def save_to_database(data: List[Dict[str, Any]], db_name: str):
-    os.makedirs('db', exist_ok=True)
-    db_path = os.path.join('db', db_name)
+    os.makedirs('../db', exist_ok=True)
+    db_path = os.path.join('../db', db_name)
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
     
