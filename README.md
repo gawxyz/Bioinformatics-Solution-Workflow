@@ -35,7 +35,7 @@ paper-summary-generator/
 │   └── paper_summaries.db
 ├── logs/
 │   └── paper_processor_YYYYMMDD_HHMMSS.log
-��── README.md
+├── README.md
 ├── LICENSE
 ├── .gitignore
 └── environment.yml
